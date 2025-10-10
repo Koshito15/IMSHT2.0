@@ -2,7 +2,7 @@
 // create_payment.php
 // POST: amount (in centavos), e.g. 1000 => ₱10.00
 
-$secret_key = "sk_test_4hAF3fY4EMFXbTAiSJEUGQmF"; // replace with your secret key
+$secret_key = "sk_test_psr9m6mXoYfv8NKSopxbhN3Q"; // replace with your secret key
 $amount = isset($_POST['amount']) ? intval($_POST['amount']) : 0;
 
 if ($amount <= 0) {
