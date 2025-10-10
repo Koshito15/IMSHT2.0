@@ -1,23 +1,25 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Payment</title>
-  <link rel="stylesheet" href="style.css?v=1.0.2">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Complete Your Payment</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="kiosk">
-    <div class="payment-box" id="payment-box">
-      <h2>Complete Your Payment</h2>
-      <p class="amount">Total: ₱<span id="payment-total">0</span></p>
+  <main class="container">
+    <h1>Complete Your Payment</h1>
 
-      <!-- Buttons -->
-      <button id="gcash-btn">Pay with GCash</button>
-      <p class="note">You will be redirected to PayMongo checkout.</p>
+    <div id="order-summary">
+      <p id="order-items">Items: <span id="items-count">0</span></p>
+      <p id="total-label">Total: <strong id="total-display">₱0.00</strong></p>
     </div>
-  </div>
 
-  <script src="script.js?v=1.0.2"></script>
+    <div id="messages" role="status" aria-live="polite"></div>
+
+    <button id="pay-button" disabled>Pay with GCash / PayMongo</button>
+  </main>
+
+  <script src="script.js"></script>
 </body>
 </html>
