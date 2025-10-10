@@ -26,6 +26,114 @@ document.addEventListener("DOMContentLoaded", async () => {
     setPaymentQR(orderAmount);
   }
 });
+// script.js
+// Responsible for reading the cart / amount and calling backend to create checkout
+
+document.addEventListener('DOMContentLoaded', () => {
+  const totalDisplay = document.getElementById('total-display');
+  const itemsCount = document.getElementById('items-count');
+  const payButton = document.getElementById('pay-button');
+  const messages = document.getElementById('messages');
+
+  // ------------- SOURCE OF AMOUNT -------------
+  // This logic tries multiple places for the order total:
+  // 1) Query param ?amount=100.50 (in PHP or JS you can set this)
+  // 2) localStorage 'cartTotal' (common pattern for static sites)
+  // 3) fallback: compute from localStorage 'cartItems' if present
+  function readAmountFromSources() {
+    // 1) query param
+    const urlParams = new URLSearchParams(window.location.search);
+    const qAmount = urlParams.get('amount');
+    if (qAmount && !isNaN(Number(qAmount))) {
+      return Number(qAmount);
+    }
+
+    // 2) localStorage 'cartTotal' (stored in pesos, e.g. 250.00)
+    try {
+      const lsTotal = localStorage.getItem('cartTotal');
+      if (lsTotal && !isNaN(Number(lsTotal))) return Number(lsTotal);
+    } catch (e) { /* ignore localStorage errors */ }
+
+    // 3) compute from cart items stored in localStorage as JSON array
+    try {
+      const raw = localStorage.getItem('cartItems'); // expect [{name, qty, price}, ...]
+      if (raw) {
+        const arr = JSON.parse(raw);
+        if (Array.isArray(arr)) {
+          const tot = arr.reduce((s, it) => s + (Number(it.price || 0) * Number(it.qty || 1)), 0);
+          if (!isNaN(tot)) return tot;
+        }
+      }
+    } catch (e) { /* ignore JSON errors */ }
+
+    // default
+    return 0;
+  }
+
+  function showMessage(msg, type = 'info') {
+    messages.textContent = msg;
+    messages.className = type;
+  }
+
+  const amountPesos = readAmountFromSources(); // e.g. 150.00
+  itemsCount.textContent = (localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')).length : 0);
+  totalDisplay.textContent = `₱${Number(amountPesos).toFixed(2)}`;
+
+  // Validate amount
+  if (!amountPesos || Number(amountPesos) <= 0) {
+    showMessage('Your order total is ₱0.00 — set a nonzero amount before checking out.', 'error');
+    payButton.disabled = true;
+    return;
+  } else {
+    payButton.disabled = false;
+    showMessage(`Ready to pay ₱${Number(amountPesos).toFixed(2)}`, 'info');
+  }
+
+  // Convert to smallest currency unit (centavos). PayMongo expects amount in centavos (e.g., 100.00 PHP -> 10000)
+  function pesosToCentavos(pesos) {
+    // Avoid float rounding issues by working as integers
+    return Math.round(Number(pesos) * 100);
+  }
+
+  payButton.addEventListener('click', async () => {
+    payButton.disabled = true;
+    showMessage('Creating checkout session… (do not refresh)', 'info');
+
+    const payload = {
+      amount_centavos: pesosToCentavos(amountPesos),
+      currency: 'PHP',
+      description: 'Order from IMSHT2.0'
+    };
+
+    try {
+      const resp = await fetch('create_payment.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(payload),
+      });
+
+      if (!resp.ok) {
+        const txt = await resp.text();
+        throw new Error(`Server returned ${resp.status}: ${txt}`);
+      }
+
+      const data = await resp.json();
+      // Expected server response: { success: true, checkout_url: "https://checkout.paymongo.com/...." }
+      if (data && data.checkout_url) {
+        showMessage('Redirecting to payment provider…', 'info');
+        // redirect user to checkout
+        window.location.href = data.checkout_url;
+      } else {
+        throw new Error('No checkout URL returned from server.');
+      }
+    } catch (err) {
+      console.error(err);
+      showMessage('Payment request failed: ' + err.message, 'error');
+      payButton.disabled = false;
+    }
+  });
+});
+
 
 // ---------------------- UI helpers ----------------------
 function showToast(msg, type = "info") {
