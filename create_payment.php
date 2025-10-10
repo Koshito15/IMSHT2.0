@@ -12,7 +12,7 @@ if ($amount <= 0) {
 }
 
 // Base domain
-$baseUrl = "https://randev.wuaze.com";
+$baseUrl = "https://koshito15.github.io/IMSHT2.0";
 
 // Webhook-secured vouchers mean we need source_id in redirect
 // For now, we let PayMongo attach ?id=src_xxx automatically
