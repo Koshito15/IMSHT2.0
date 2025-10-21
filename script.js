@@ -4,11 +4,11 @@
 // ---------------------- CONFIG ----------------------
 // IMPORTANT: Make sure your QR code image filenames match what you enter here.
 const products = [
-    { id: 1, name: "1 Hour", price: 5,   qrImage: "qr_5.png" },
-    { id: 2, name: "3 Hours", price: 15,  qrImage: "qr_15.png" },
-    { id: 3, name: "1 Day", price: 25,  qrImage: "qr_25.png" },
-    { id: 4, name: "3 Days", price: 60,  qrImage: "qr_60.png" },
-    { id: 5, name: "7 Days", price: 100, qrImage: "qr_100.png" }
+    { id: 1, name: "1 Hour", price: 5,   qrImage: "qr_5.jpg" },
+    { id: 2, name: "3 Hours", price: 15,  qrImage: "qr_15.jpg" },
+    { id: 3, name: "1 Day", price: 25,  qrImage: "qr_25.jpg" },
+    { id: 4, name: "3 Days", price: 60,  qrImage: "qr_60.jpg" },
+    { id: 5, name: "7 Days", price: 100, qrImage: "qr_100.jpg" }
 ];
 
 // ---------------------- STATE ----------------------
