@@ -44,8 +44,11 @@
               <p class="amount">Please pay exactly: ₱<span id="payment-total">0</span></p>
               <img src="" alt="GCash QR Code" class="qr-code-img" id="payment-qr-img">
               <p class="note">1. Scan the QR Code with your GCash App.</p>
-              <p class="note">2. After paying, enter the GCash <b>Ref. No.</b> below.</p>
-              <input type="tel" id="gcash-ref-input" placeholder="Enter GCash Reference Number">
+              <p class="note"> 2. After paying, enter the GCash <b>Ref. No.</b></p>
+              <p class="note"> 3. After entering the Gcash <b>Ref. No.</b> 
+              <p class="note"> Upload the Screenshot below.</p>
+              <input type="tel" class = gcash-ref-input id="gcash-ref-input" placeholder="Enter GCash Reference Number">
+              <input type="file" class = payment-screenshot-input id="payment-screenshot-input" accept="image/*"/>
               <button onclick="handleManualPayment(this)">Get My Voucher</button>
               <button class="back-btn" onclick="showScreen('order-screen')">Back</button>
           </div>
