@@ -1,0 +1,360 @@
+:root {
+  --primary-glow: #00c6ff;
+  --primary-blue: #0072ff;
+  --background-dark: #12181f; /* Deeper dark */
+  --background-light: #1a222c; /* Slightly lighter */
+  --success-green: #28a745;
+  --error-red: #dc3545;
+  --text-light: #e0e0e0; /* Softer white */
+  --text-dark: #111111;
+  --border-color: #3a4a5a;
+}
+
+/* =========================
+   Global Styles
+========================= */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background: var(--background-dark);
+  color: var(--text-light);
+  font-size: 16px;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.hidden { display: none !important; }
+h1, h2, h3 { font-weight: 600; }
+h1 { font-size: 2.5em; margin-bottom: 5px; color: #fff; }
+h2 { font-size: 1.8em; margin-bottom: 15px; }
+h3 { font-size: 1.2em; color: #aaa; margin-top: 30px; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 1px;}
+
+/* =========================
+   Kiosk Layout
+========================= */
+.kiosk {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+.kiosk-container {
+  background: var(--background-light);
+  padding: 40px 30px;
+  border-radius: 24px;
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+.subtitle {
+  font-size: 1.1em;
+  color: #aaa;
+  margin-top: 0;
+  margin-bottom: 40px;
+}
+
+/* =========================
+   Products
+========================= */
+.products {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 20px;
+  margin-bottom: 20px;
+}
+.product {
+  background: #2c3643;
+  border-radius: 16px;
+  padding: 20px 15px;
+  text-align: center;
+  border: 2px solid var(--border-color);
+  transition: all 0.3s ease;
+  position: relative;
+}
+.product:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 25px rgba(0, 198, 255, 0.1);
+  border-color: var(--primary-glow);
+}
+.product h4 { margin: 0 0 5px; font-size: 1.2em; font-weight: 600; color: #fff; }
+.product p { margin: 0 0 15px; font-size: 1.1em; font-weight: 400; color: var(--primary-glow); }
+.product.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  border-color: #444;
+}
+.product.disabled:hover {
+  transform: none;
+  box-shadow: none;
+  border-color: #444;
+}
+.product .out-of-stock-badge {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  background: var(--error-red);
+  color: white;
+  padding: 4px 10px;
+  font-size: 0.8em;
+  font-weight: 600;
+  border-radius: 0 14px 0 14px;
+}
+
+/* =========================
+   Buttons
+========================= */
+button {
+  width: 100%;
+  padding: 14px 20px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1em;
+  font-weight: 600;
+  cursor: pointer;
+  background: #445061;
+  color: var(--text-light);
+  transition: all 0.2s ease;
+}
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+button:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+/* THE CHAMPION BUTTON */
+button.hero-btn {
+  background-image: linear-gradient(45deg, var(--primary-glow) 0%, var(--primary-blue) 100%);
+  color: #fff;
+  font-size: 1.2em;
+  padding: 16px 20px;
+  box-shadow: 0 5px 20px rgba(0, 114, 255, 0.3);
+}
+button.hero-btn:hover {
+  box-shadow: 0 8px 25px rgba(0, 114, 255, 0.4);
+}
+button.back-btn {
+  background: none;
+  border: 2px solid var(--border-color);
+}
+button.back-btn:hover {
+  background: var(--border-color);
+  color: #fff;
+}
+button:disabled {
+    background-color: #333;
+    color: #777;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* =========================
+   Payment & Input Fields
+========================= */
+.payment-box {
+  background: #fff;
+  color: var(--text-dark);
+  padding: 30px;
+  border-radius: 20px;
+  width: auto;
+  margin: 20px auto;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+.qr-code-img {
+  width: 200px;
+  border-radius: 16px;
+  border: 1px solid #eee;
+  padding: 5px;
+}
+.note { margin: 10px 0; font-size: 0.9em; color: #666; }
+.timer {
+  font-size: 1em;
+  font-weight: 600;
+  color: var(--error-red);
+  background-color: #f8d7da;
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: inline-block;
+  margin-bottom: 15px;
+}
+
+/* Input Group Styles */
+.input-group {
+  width: 100%;
+  margin: 20px 0 0 0;
+}
+.input-group label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.9em;
+  color: #555;
+  margin-bottom: 8px;
+  text-align: left;
+}
+.gcash-ref-input, .payment-screenshot-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 1em;
+  font-family: 'Poppins', sans-serif;
+  background: #f9f9f9;
+}
+.gcash-ref-input:focus, .payment-screenshot-input:focus {
+    border-color: var(--primary-blue);
+    background: #fff;
+    outline: none;
+}
+.payment-screenshot-input::file-selector-button {
+  margin-right: 15px;
+  border: none;
+  background: var(--primary-blue);
+  padding: 12px 18px;
+  border-radius: 8px;
+  color: #fff;
+  cursor: pointer;
+  font-weight: 600;
+  font-family: 'Poppins', sans-serif;
+  transition: background .2s ease-in-out;
+}
+.payment-screenshot-input::file-selector-button:hover {
+  background: var(--primary-glow);
+}
+
+/* =========================
+   Success Screen
+========================= */
+.success-box { padding: 20px; }
+.success-icon {
+  font-size: 4em;
+  line-height: 1;
+  margin-bottom: 15px;
+  animation: popIn 0.5s ease-out;
+}
+@keyframes popIn {
+  0% { transform: scale(0.5); opacity: 0; }
+  80% { transform: scale(1.1); }
+  100% { transform: scale(1); opacity: 1; }
+}
+.voucher-display-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--background-dark);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  padding: 8px;
+  margin: 20px 0;
+}
+.voucher-display {
+  flex-grow: 1;
+  text-align: center;
+  font-weight: 600;
+  letter-spacing: 2px;
+  color: var(--primary-glow);
+  font-size: 1.5em;
+}
+#copy-voucher-btn {
+  width: auto;
+  margin: 0;
+  padding: 12px 24px;
+  background: var(--primary-blue);
+  color: #fff;
+}
+
+/* =========================
+   Loader and Spinner
+========================= */
+.loader-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(18, 24, 31, 0.85);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10001;
+  opacity: 1;
+  transition: opacity 0.3s ease-in-out;
+}
+.loader-overlay.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+.spinner {
+  border: 5px solid rgba(255,255,255,0.2);
+  border-top: 5px solid var(--primary-glow);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* =========================
+   Other Sections
+========================= */
+.toast {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 14px 20px;
+  border-radius: 10px;
+  font-size: 1em;
+  z-index: 99999;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+.toast.success { background: linear-gradient(45deg, #28a745, #218838); }
+.toast.error { background: linear-gradient(45deg, #dc3545, #c82333); }
+#admin-hotspot, #admin-panel { display: none; } /* Hiding admin for final design */
+
+/* A universal style for all text-based input fields */
+#redeem-code-input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  font-size: 1em;
+  font-family: 'Poppins', sans-serif;
+  background: var(--background-dark);
+  color: var(--text-light);
+  transition: all 0.3s ease;
+}
+
+#redeem-code-input:focus {
+  border-color: var(--primary-glow);
+  background: #1c2530;
+  outline: none;
+}
+
+/* Improving the layout of the redeem section */
+.redeem-form-container {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+/* Sizing the redeem button to fit perfectly */
+#redeem-section button {
+  flex-shrink: 0; /* Prevents the button from shrinking */
+  width: auto;
+  padding: 14px 24px;
+}
