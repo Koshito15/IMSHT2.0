@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>WifiSpot - Kiosk</title>
+  <link rel="stylesheet" href="style.css" />
+  
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+</head>
+<body>
+  <div id="admin-hotspot" title="admin" onclick="showAdminPanel()"></div>
+
+  <div class="kiosk">
+    <div class="kiosk-container">
+      
+      <!-- Welcome Screen -->
+      <div id="welcome-screen" class="screen active">
+        <h1>WifiSpot</h1>
+        <button id="start-order-btn" onclick="showScreen('order-screen', this)">Start Order</button>
+        <div id="redeem-section">
+          <h3>Redeem Voucher Code</h3>
+          <div class="redeem-form-container">
+            <input type="text" id="redeem-code-input" placeholder="Enter voucher code" />
+            <button onclick="redeemVoucher()">Redeem</button>
+          </div>
+          <p id="redeem-message" class="hidden"></p>
+        </div>
+      </div>
+
+      <!-- Order Screen -->
+      <div id="order-screen" class="screen hidden">
+        <h2>Select a Voucher</h2>
+        <div class="products" id="product-list"></div>
+        <button class="back-btn" onclick="showScreen('welcome-screen', this)">Back</button>
+      </div>
+      
+      <!-- Manual Payment Screen -->
+      <div id="payment-screen" class="screen hidden">
+          <div class="payment-box">
+              <h2>Complete Your Payment</h2>
+              <p class="amount">Please pay exactly: ₱<span id="payment-total">0</span></p>
+              <img src="" alt="GCash QR Code" class="qr-code-img" id="payment-qr-img">
+              <p class="note">1. Scan the QR Code with your GCash App.</p>
+              <p class="note"> 2. After paying, enter the GCash <b>Ref. No.</b></p>
+              <p class="note"> 3. After entering the Gcash <b>Ref. No.</b> 
+              <p class="note"> Upload the Screenshot below.</p>
+              <input type="tel" class = gcash-ref-input id="gcash-ref-input" placeholder="Enter GCash Reference Number">
+              <input type="file" class = payment-screenshot-input id="payment-screenshot-input" accept="image/*"/>
+              <button onclick="handleManualPayment(this)">Get My Voucher</button>
+              <button class="back-btn" onclick="showScreen('order-screen')">Back</button>
+          </div>
+      </div>
+
+      <!-- Success Screen -->
+      <div id="success-screen" class="screen hidden">
+        <div class="success-box">
+          <h2>✅ Payment Verified!</h2>
+          <p>Thank you for your purchase.</p>
+          <h3>Your Voucher Code:</h3>
+          <p class="voucher-display" id="success-voucher-code"></p>
+          <button onclick="showScreen('welcome-screen', this)">Done</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Admin Panel -->
+  <div id="admin-panel" class="hidden">
+      <div class="admin-header"><h2>Admin Panel</h2><button class="close-btn" onclick="hideAdminPanel()">✖</button></div>
+      <div class="admin-controls">
+        <input type="text" id="search-vouchers" placeholder="Search voucher..." />
+        <select id="filter-status"><option value="all">All</option><option value="unused">Unused</option><option value="used">Used</option></select>
+        <button class="download-btn" onclick="downloadVouchers()">Export CSV</button>
+      </div>
+      <div class="admin-content"><ul id="voucher-list"></ul></div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
